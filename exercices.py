@@ -137,7 +137,7 @@ def f(arr1, arr2):
 
 
 def f_vectorized(arr1, arr2):
-    pass  # 👈 Insérez le code ici
+    return(2*arr1+3*arr2)  # 👈 Insérez le code ici
 
 
 print(
@@ -162,7 +162,11 @@ def g(x):
 
 
 def g_vectorized(x):
-    pass  # 👈 Insérez le code ici
+    y = np.copy(x)
+    a = abs(x)==x
+    b = y[a] * y[a]
+    y[a] = b
+    return(y) # 👈 Insérez le code ici
 
 
 print(g_vectorized(np.array([1, -2, 3, -4, 5])))  # attendu: [ 1 -2  9 -4 25]
@@ -178,7 +182,8 @@ print(g_vectorized(np.array([1, -2, 3, -4, 5])))  # attendu: [ 1 -2  9 -4 25]
 
 # %%
 def select_even(arr):
-    pass  # 👈 Insérez le code ici
+    a = arr%2 == 0
+    return(arr[a])  # 👈 Insérez le code ici
 
 
 print(
@@ -193,7 +198,10 @@ print(
 
 # %%
 def replace_negatives(arr):
-    pass  # 👈 Insérez le code ici
+    y = np.copy(arr)
+    a = abs(arr) != arr 
+    y[a] = 0
+    return(y) # 👈 Insérez le code ici
 
 
 print(replace_negatives(np.array([1, -2, 3, -4, 5])))  # attendu: [1 0 3 0 5]
@@ -207,7 +215,8 @@ print(replace_negatives(np.array([1, -2, 3, -4, 5])))  # attendu: [1 0 3 0 5]
 
 # %%
 def get_center(arr):
-    pass  # 👈 Insérez le code ici
+    n,p = np.size(arr,0),np.size(arr,1)
+    return(arr[1:n-1,1:p-1])  # 👈 Insérez le code ici
 
 
 print(get_center(np.arange(1, 26).reshape(5, 5)))  # attendu: [[ 7  8  9]
@@ -222,7 +231,9 @@ print(get_center(np.arange(1, 26).reshape(5, 5)))  # attendu: [[ 7  8  9]
 
 # %%
 def swap_first_rows(arr):
-    pass  # 👈 Insérez le code ici
+    b,c = np.copy(arr[0]),np.copy(arr[1])
+    arr[0],arr[1] = c,b
+    return(arr)  # 👈 Insérez le code ici
 
 
 print(swap_first_rows(np.array([[1, 2], [3, 4], [5, 6]])))  # attendu: [[3 4]
@@ -240,7 +251,13 @@ print(swap_first_rows(np.array([[1, 2], [3, 4], [5, 6]])))  # attendu: [[3 4]
 
 # %%
 def funny_checkerboard(size):
-    pass  # 👈 Insérez le code ici
+    M,N = np.indices((size,size))
+    a = np.zeros((size,size))
+    b = np.ones((size,size))[0::2,0::2]
+    d = M[0::2,0::2]
+    a[1::2,1::2] = np.ones((size,size))[1::2,1::2]
+    a[0::2,0::2] = d + b
+    return(a) # 👈 Insérez le code ici
 
 
 print(funny_checkerboard(5))  # attendu: [[1. 0. 1. 0. 1.]
@@ -261,8 +278,11 @@ print(funny_checkerboard(5))  # attendu: [[1. 0. 1. 0. 1.]
 
 # %%
 def mean(arr):
-    pass  # 👈 Insérez le code ici
+    n = np.size(arr,0)*np.size(arr,1)
+    return(np.sum(arr)/n)  # 👈 Insérez le code ici
 
+arr1 = np.array([[1,2],[3,4],[5,6]])
+print(mean(arr1))
 
 # %% [markdown]
 # ## Exercices 4.2.	Créer une fonction qui, étant donné un tableau 2D, retourne la somme de ses éléments des colonnes d'indice impair
@@ -272,7 +292,8 @@ def mean(arr):
 
 # %%
 def sum_odd_columns(arr):
-    pass  # 👈 Insérez le code ici
+    a = arr[::,1::2]
+    return(np.sum(a))  # 👈 Insérez le code ici
 
 
 print(sum_odd_columns(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])))  # attendu: 15
@@ -285,8 +306,12 @@ print(sum_odd_columns(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])))  # attendu: 
 
 
 # %%
-def max_per_line(arr):
-    pass  # 👈 Insérez le code ici
+def max_per_line(arr): #je sais qu'il aurait fallu vectoriser, mais je n'ai pas réussi
+    L = []
+    n = np.size(arr,0)
+    for i in range(n) : 
+        L.append(np.max(arr[i]))
+    return(np.array(L))  # 👈 Insérez le code ici
 
 
 print(max_per_line(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])))  # attendu: [3 6 9]
@@ -298,8 +323,15 @@ print(max_per_line(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])))  # attendu: [3 
 
 
 # %%
-def min_per_column(arr):
-    pass  # 👈 Insérez le code ici
+def min_per_column(arr): #idem
+    L = []
+    n = np.size(arr,1)
+    trarr = np.transpose(arr)
+    for i in range(n) : 
+        L.append(np.min(trarr[i]))
+    return(np.array(L))  # 👈 Insérez le code ici
 
 
 print(min_per_column(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])))  # attendu: [1 2 3]
+
+# %%
